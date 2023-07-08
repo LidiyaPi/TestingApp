@@ -29,8 +29,6 @@ class CategoryCell: UITableViewCell {
     }()
     
     private func customizeCell() {
-//        whiteView.layer.cornerRadius = 10
-//        whiteView.layer.borderWidth = 2
         backgroundColor = .white
     }
     
@@ -42,15 +40,7 @@ class CategoryCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//    }
-//
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//    }
-    
+
     private func setupUI() {
         addSubviews()
         setupConstraints()
@@ -76,12 +66,7 @@ class CategoryCell: UITableViewCell {
             make.right.equalTo(imageShop.snp.right)
         }
     }
-    
-//    func setupData( viewModel: Categories) {
-//        couponName.text = viewModel.name
-//        guard let url = URL(string: viewModel.image_url ?? "") else { return }
-//                imageShop.sd_setImage(with: url)
-        
+
     func setupCell(_ model: ArrayCategories ) {
             let categories = model.name
             

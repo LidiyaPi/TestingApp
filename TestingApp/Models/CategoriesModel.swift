@@ -57,3 +57,8 @@ struct Tegs {
 struct SortedDishes {
     var dishes: [String: [Any]]
 }
+
+struct BasketDishes {
+    var quantity: Int = 1
+    var dish: [Dishes]
+}

@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class BasketTableViewCell: UITableViewCell {
-
+    
     var minusButtonAction: (() -> Void)?
     var plusButtonAction: (() -> Void)?
     
@@ -21,7 +21,7 @@ class BasketTableViewCell: UITableViewCell {
             quantityLabel.text = "\(quantity)"
         }
     }
-
+    
     
     private var dishImage: UIImageView = {
         let imageView = UIImageView()
@@ -54,7 +54,7 @@ class BasketTableViewCell: UITableViewCell {
         control.layer.cornerRadius = 10
         return control
     }()
-
+    
     let minusButton: UIButton = {
         let button = UIButton(type: .custom)
         button.layer.cornerRadius = 10
@@ -75,7 +75,7 @@ class BasketTableViewCell: UITableViewCell {
         label.textColor = .black
         return label
     }()
-
+    
     let plusButton: UIButton = {
         let button = UIButton(type: .custom)
         button.layer.cornerRadius = 10
@@ -91,12 +91,12 @@ class BasketTableViewCell: UITableViewCell {
     private func customizeCell() {
         backgroundColor = .white
     }
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -128,13 +128,11 @@ class BasketTableViewCell: UITableViewCell {
         dishName.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(10)
             make.left.equalTo(dishImage.snp.right).offset(16)
-//            make.right.equalTo(imageShop.snp.right)
         }
         
         priceLabel.snp.makeConstraints { make in
             make.top.equalTo(dishName.snp.bottom)
             make.left.equalTo(dishImage.snp.right).offset(16)
-//            make.right.equalTo(imageShop.snp.right)
         }
         
         quantityControl.snp.makeConstraints { make in
@@ -161,11 +159,11 @@ class BasketTableViewCell: UITableViewCell {
     }
     
     @objc private func minusButtonTapped() {
-            minusButtonAction?()
-        }
+        minusButtonAction?()
+    }
     
     @objc private func plusButtonTapped() {
-            plusButtonAction?()
-        }
-
+        plusButtonAction?()
+    }
+    
 }

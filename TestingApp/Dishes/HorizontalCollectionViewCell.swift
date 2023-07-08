@@ -12,7 +12,6 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
     
     let tagLabel: UILabel = {
         let label: UILabel = .init()
-//        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "SF Pro Display", size: 16)
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -37,19 +36,17 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
     
     private func customizeCell() {
         contentView.layer.cornerRadius = 8
-//        contentView.backgroundColor = .gray
         contentView.backgroundColor = UIColor(red: 248/255, green: 247/255, blue: 245/255, alpha: 1)
-  }
+    }
     
     private func constraints() {
-
+        
         tagLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
     
     func setup(title: String) {
-      
+        tagLabel.text = title
     }
-    
 }

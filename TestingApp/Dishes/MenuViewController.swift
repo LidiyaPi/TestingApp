@@ -17,7 +17,7 @@ class MenuViewController: UIViewController {
     
     private var keys: [String] = []
     private var selectedKey: String = ""
-        
+    
     func buttonPressed(number: Int) {
         print("j")
     }
@@ -39,14 +39,14 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupNavigationController()
+        setupMenuNavigationController()
         addSubviews()
         addConstraints()
         setupCollections()
         print(dishes)
     }
     
-    private func setupNavigationController() {
+    private func setupMenuNavigationController() {
         
         let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         containerView.layer.cornerRadius = 25
@@ -116,7 +116,7 @@ extension MenuViewController: UICollectionViewDataSource {
             return keys.count
         case verticalCollection:
             return dishes[selectedKey]?.count ?? 0
-
+            
         default:
             return 0
         }
@@ -152,7 +152,7 @@ extension MenuViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch collectionView {
         case horizontalCollection:
-                return CGSize(width: 86, height: 35)
+            return CGSize(width: 86, height: 35)
         case verticalCollection:
             let height = (collectionView.bounds.height - sideInset * 3) / 2
             return CGSize(width: 109, height: 145)
@@ -168,9 +168,9 @@ extension MenuViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         switch collectionView {
         case horizontalCollection:
-           return UIEdgeInsets(top: 0, left: sideInset, bottom: 0, right: 100)
+            return UIEdgeInsets(top: 0, left: sideInset, bottom: 0, right: 100)
         case verticalCollection:
-           return UIEdgeInsets(top: sideInset, left: sideInset, bottom: sideInset, right: sideInset)
+            return UIEdgeInsets(top: sideInset, left: sideInset, bottom: sideInset, right: sideInset)
         default:
             return .zero
         }
@@ -185,17 +185,17 @@ extension MenuViewController: UICollectionViewDelegateFlowLayout {
         case horizontalCollection:
             selectedKey = keys[indexPath.row]
             verticalCollection.reloadData()
-
-           
+            
+            
         case verticalCollection:
-                    let destination = ProductViewController()
-                    destination.transitioningDelegate = transitioningDelegate
-                    destination.modalPresentationStyle = .custom
-                    present(destination, animated: true)
+            let destination = ProductViewController()
+            destination.transitioningDelegate = transitioningDelegate
+            destination.modalPresentationStyle = .custom
+            present(destination, animated: true)
             
             guard let selectedTag = dishes[selectedKey] else { return }
             destination.setup(model: selectedTag[indexPath.row])
-
+            
         default:
             break
         }
@@ -209,9 +209,11 @@ extension UIViewController {
         layout.scrollDirection = scrollDirection
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collection.showsHorizontalScrollIndicator = false
+        collection.showsVerticalScrollIndicator = false
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.backgroundColor = .white
-
+        
         return collection
     }
 }

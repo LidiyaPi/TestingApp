@@ -7,17 +7,19 @@
 
 import UIKit
 
-class TabBarViewController: UITabBarController {
+protocol TabBarControllerDelegate: AnyObject {
+    func addToCartButtonTapped(dish: Dishes)
+}
 
+class TabBarViewController: UITabBarController {
+    
+    weak var tabBarControllerDelegate: TabBarControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupControllers()
         selectedIndex = 0
         setTabBarAppearance()
-//        tabBar.tintColor = .systemGreen
-//        tabBar.unselectedItemTintColor = .systemGray
-        
     }
     
     private func setupControllers() {
@@ -26,7 +28,7 @@ class TabBarViewController: UITabBarController {
         let navigationControllerSea = UINavigationController(rootViewController: SearchViewController())
         let navigationControllerBas = UINavigationController(rootViewController: BasketViewController())
         let navigationControllerAcc = UINavigationController(rootViewController: AccountViewController())
-
+        
         viewControllers = [
             generateVC(viewController: navigationControllerGen,
                        title: "Главная",
@@ -41,7 +43,6 @@ class TabBarViewController: UITabBarController {
                        title: "Аккаунт",
                        image: UIImage(named: "аккаунт"))
         ]
-        
     }
     
     private func generateVC(viewController: UIViewController, title: String, image: UIImage?) -> UIViewController {
@@ -51,7 +52,6 @@ class TabBarViewController: UITabBarController {
     }
     
     private func setTabBarAppearance() {
-        
         self.tabBar.itemPositioning = .fill
     }
 }

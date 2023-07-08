@@ -13,15 +13,10 @@ struct PopUpWarningPINViewModel {
     let description: String?
 }
 
-//protocol PopUpWarningViewControllerHandler: AnyObject {
-//
-//    /// Метод срабатывающий при нажатии кнопки "Закрыть"
-//    func didTapCloseButton()
-//}
 
 final class ProductViewController: UIViewController {
     
-    private var autoPayIsEnable: Bool = false
+    private var dish: Dishes?
     
     // MARK: Views
     
@@ -29,7 +24,7 @@ final class ProductViewController: UIViewController {
         let view: UIView = .init()
         view.backgroundColor = .gray
         view.alpha = 0.4
-
+        
         return view
     }()
     
@@ -37,7 +32,6 @@ final class ProductViewController: UIViewController {
         let view: UIView = .init()
         view.backgroundColor = .white
         view.layer.cornerRadius = 8
-//        view.layer.shadowColor = .init(gray: 08, alpha: 0.8)
         return view
     }()
     
@@ -123,107 +117,102 @@ final class ProductViewController: UIViewController {
         setupUI()
     }
     
-        func setup(
-        title: String,
-        description: String
-    ) {
-        titleLabel.text = title
-        descriptionLabel.text = description
+    private func setupUI() {
+        addSubviews()
+        addConstraints()
+        addAction()
+        
     }
     
-        private func setupUI() {
-            addSubviews()
-            addConstraints()
-            addAction()
+    private func addSubviews() {
+        view.addSubview(opacityView)
+        view.addSubview(wrapper)
+        wrapper.addSubview(productImage)
+        productImage.addSubview(addLikeButton)
+        productImage.addSubview(closeButton)
+        wrapper.addSubview(titleLabel)
+        wrapper.addSubview(priceWeightLabel)
+        wrapper.addSubview(descriptionLabel)
+        wrapper.addSubview(addToBasketButton)
+    }
+    
+    private func addConstraints() {
+        opacityView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         
-        private func addSubviews() {
-            view.addSubview(opacityView)
-            view.addSubview(wrapper)
-            wrapper.addSubview(productImage)
-            productImage.addSubview(addLikeButton)
-            productImage.addSubview(closeButton)
-            wrapper.addSubview(titleLabel)
-            wrapper.addSubview(priceWeightLabel)
-            wrapper.addSubview(descriptionLabel)
-            wrapper.addSubview(addToBasketButton)
+        wrapper.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.left.right.equalToSuperview().inset(16)
+            make.top.greaterThanOrEqualToSuperview().offset(16)
+            make.bottom.lessThanOrEqualToSuperview().inset(16)
         }
         
-        private func addConstraints() {
-            opacityView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-            
-            wrapper.snp.makeConstraints { make in
-                make.center.equalToSuperview()
-                make.left.right.equalToSuperview().inset(16)
-                make.top.greaterThanOrEqualToSuperview().offset(16)
-                make.bottom.lessThanOrEqualToSuperview().inset(16)
-            }
-            
-            productImage.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(24)
-                make.horizontalEdges.equalToSuperview().inset(24)
-                make.height.equalTo(204)
-            }
-            
-            addLikeButton.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(8)
-                make.right.equalTo(closeButton.snp.left).inset(-5)
-                make.height.width.equalTo(40)
-            }
-            
-            closeButton.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(8)
-                make.right.equalToSuperview().offset(-8)
-                make.height.width.equalTo(40)
-            }
-            
-            titleLabel.snp.makeConstraints { make in
-                make.top.equalTo(productImage.snp.bottom).offset(8)
-                make.left.equalToSuperview().inset(24)
-                make.height.equalTo(26)
-            }
-            
-            priceWeightLabel.snp.makeConstraints { make in
-                make.top.equalTo(titleLabel.snp.bottom).offset(8)
-                make.left.equalToSuperview().inset(24)
-                make.height.equalTo(26)
-            }
-            
-            descriptionLabel.snp.makeConstraints { make in
-                make.top.equalTo(priceWeightLabel.snp.bottom).offset(24)
-                make.left.right.equalToSuperview().inset(24)
-            }
-            
-            addToBasketButton.snp.makeConstraints { make in
-                make.height.equalTo(48)
-                make.top.equalTo(descriptionLabel.snp.bottom).offset(24)
-                make.left.bottom.right.equalToSuperview().inset(24)
-            }
+        productImage.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(24)
+            make.horizontalEdges.equalToSuperview().inset(24)
+            make.height.equalTo(204)
         }
+        
+        addLikeButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(8)
+            make.right.equalTo(closeButton.snp.left).inset(-5)
+            make.height.width.equalTo(40)
+        }
+        
+        closeButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(8)
+            make.right.equalToSuperview().offset(-8)
+            make.height.width.equalTo(40)
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(productImage.snp.bottom).offset(8)
+            make.left.equalToSuperview().inset(24)
+            make.height.equalTo(26)
+        }
+        
+        priceWeightLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.left.equalToSuperview().inset(24)
+            make.height.equalTo(26)
+        }
+        
+        descriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(priceWeightLabel.snp.bottom).offset(24)
+            make.left.right.equalToSuperview().inset(24)
+        }
+        
+        addToBasketButton.snp.makeConstraints { make in
+            make.height.equalTo(48)
+            make.top.equalTo(descriptionLabel.snp.bottom).offset(24)
+            make.left.bottom.right.equalToSuperview().inset(24)
+        }
+    }
     
     func setup(model: Dishes) {
-       
+        dish = model
+        
         titleLabel.text = model.name
         descriptionLabel.text = model.description
         priceWeightLabel.text = String(model.price)
         
         guard let url = URL(string: model.imageUrl ) else { return }
         productImage.sd_setImage(with: url)
-     
+        
     }
     
     private func addAction() {
-        let goBack = UITapGestureRecognizer(target: self, action: #selector(closeVC))
-        addToBasketButton.addGestureRecognizer(goBack)
-        
         let goBackX = UITapGestureRecognizer(target: self, action: #selector(closeVC))
-        closeButton.addGestureRecognizer(goBackX)
-//        closeButton.addGestureRecognizer(goBack)
+        addToBasketButton.addGestureRecognizer(goBackX)
     }
     
     @objc private func closeVC() {
         dismiss(animated: true)
+        guard let tabBarController = tabBarController as? TabBarViewController,
+              let dishGuarded = dish
+        else { return }
+        tabBarController.tabBarControllerDelegate?.addToCartButtonTapped(dish: dishGuarded)
+        }
     }
-}
+

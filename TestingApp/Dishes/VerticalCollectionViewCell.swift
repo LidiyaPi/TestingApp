@@ -60,13 +60,13 @@ class VerticalCollectionViewCell: UICollectionViewCell {
     }
     
     func setup(model: Dishes) {
-       
+        
         dishTitleLabel.text = model.name
         
         guard let url = URL(string: model.imageUrl ) else { return }
         dishImage.sd_setImage(with: url)
-     
+        
     }
     
-   
+    
 }
