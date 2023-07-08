@@ -44,7 +44,7 @@ final class ProductViewController: UIViewController {
     private var productImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "пекарни_и_кондитерские")
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 6
         return imageView
@@ -64,8 +64,7 @@ final class ProductViewController: UIViewController {
         button.backgroundColor = .white
         button.layer.cornerRadius = 8
         button.tintColor = .black
-//        button.setImage(UIImage(systemName: "xmark"), for: .normal)
-        button.setTitle("Д", for: .normal)
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
         return button
     }()
     
@@ -170,7 +169,7 @@ final class ProductViewController: UIViewController {
             
             addLikeButton.snp.makeConstraints { make in
                 make.top.equalToSuperview().offset(8)
-                make.right.equalTo(closeButton.snp.left).inset(-10)
+                make.right.equalTo(closeButton.snp.left).inset(-5)
                 make.height.width.equalTo(40)
             }
             
@@ -203,6 +202,17 @@ final class ProductViewController: UIViewController {
                 make.left.bottom.right.equalToSuperview().inset(24)
             }
         }
+    
+    func setup(model: Dishes) {
+       
+        titleLabel.text = model.name
+        descriptionLabel.text = model.description
+        priceWeightLabel.text = String(model.price)
+        
+        guard let url = URL(string: model.imageUrl ) else { return }
+        productImage.sd_setImage(with: url)
+     
+    }
     
     private func addAction() {
         let goBack = UITapGestureRecognizer(target: self, action: #selector(closeVC))

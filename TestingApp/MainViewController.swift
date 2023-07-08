@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     private var category = Categories(сategories: [])
     private var finishTegs = [Tegs]()
     var menuArray = MenuModel(dishes: [])
-    var sortedArray = [String: [Any]]()
+    var sortedArray = [String: [Dishes]]()
     
     let tableView: UITableView = {
         let tableView = UITableView()

@@ -49,7 +49,7 @@ class HorizontalCollectionViewCell: UICollectionViewCell {
     }
     
     func setup(title: String) {
-        tagLabel.text = title
+      
     }
     
 }

@@ -10,11 +10,14 @@ import SnapKit
 
 class MenuViewController: UIViewController {
     
-    private var dishes = [String: [Any]]()
+    private var dishes = [String: [Dishes]]()
     private let horizontalCV = HorizontalCollectionViewCell()
     private let verticalCV = VerticalCollectionViewCell()
     private var selectedTag: IndexPath?
     
+    private var keys: [String] = []
+    private var selectedKey: String = ""
+        
     func buttonPressed(number: Int) {
         print("j")
     }
@@ -67,11 +70,11 @@ class MenuViewController: UIViewController {
     private func setupCollections() {
         horizontalCollection.dataSource = self
         horizontalCollection.delegate = self
-        horizontalCollection.register(HorizontalCollectionViewCell.self, forCellWithReuseIdentifier: "CustomCollectionViewCell")
+        horizontalCollection.register(HorizontalCollectionViewCell.self, forCellWithReuseIdentifier: "HorizontalCollectionViewCell")
         
         verticalCollection.dataSource = self
         verticalCollection.delegate = self
-        verticalCollection.register(VerticalCollectionViewCell.self, forCellWithReuseIdentifier: "SecondCollectionViewCell")
+        verticalCollection.register(VerticalCollectionViewCell.self, forCellWithReuseIdentifier: "VerticalCollectionViewCell")
     }
     
     private func addSubviews() {
@@ -94,36 +97,26 @@ class MenuViewController: UIViewController {
         }
     }
     
-    func setup(model: [String: [Any]]) {
+    func setup(model: [String: [Dishes]]) {
         dishes = model
-//        horizontalCV.tagLabel = model
-        
+        keys = Array(dishes.keys)
+        selectedKey = keys[0]
+        horizontalCollection.reloadData()
     }
-    
-
 }
 
 
 // MARK: - UICollectionViewDataSource
 
 extension MenuViewController: UICollectionViewDataSource {
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        array.count
-//
-//    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
-        case verticalCollection:
-            return dishes.count
         case horizontalCollection:
-            var tagDishes: Int = 0
-//            dishes = dishes.sorted { $0.value. < $1.key}
-            if selectedTag == nil {
-                tagDishes = dishes.values.first?.count ?? 0
+            return keys.count
+        case verticalCollection:
+            return dishes[selectedKey]?.count ?? 0
 
-            }
-            return tagDishes
         default:
             return 0
         }
@@ -131,24 +124,23 @@ extension MenuViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {
+            
         case horizontalCollection:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCollectionViewCell", for: indexPath) as! HorizontalCollectionViewCell
-            cell.backgroundColor = .systemGray4
-            var tegs = dishes.keys
-            var onlyTegs = [String]()
-
-            for tag in dishes.keys {
-                onlyTegs.append(tag)
-            }
-            cell.setup(title: onlyTegs[indexPath.row])
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HorizontalCollectionViewCell",
+                                                          for: indexPath) as! HorizontalCollectionViewCell
+            cell.setup(title: keys[indexPath.row])
             return cell
+            
         case verticalCollection:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SecondCollectionViewCell", for: indexPath) as! VerticalCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VerticalCollectionViewCell",
+                                                          for: indexPath) as! VerticalCollectionViewCell
+            guard let selectedTag = dishes[selectedKey] else { return cell }
+            cell.setup(model: selectedTag[indexPath.row])
             return cell
+            
         default:
             return UICollectionViewCell()
         }
-        
     }
 }
 
@@ -160,12 +152,10 @@ extension MenuViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch collectionView {
         case horizontalCollection:
-        
-//                let width = (collectionView.bounds.width - sideInset * 8) / 2
                 return CGSize(width: 86, height: 35)
         case verticalCollection:
             let height = (collectionView.bounds.height - sideInset * 3) / 2
-            return CGSize(width: 109, height: 109)
+            return CGSize(width: 109, height: 145)
         default:
             return .zero
         }
@@ -192,13 +182,19 @@ extension MenuViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch collectionView {
-        case horizontalCollection: break
+        case horizontalCollection:
+            selectedKey = keys[indexPath.row]
+            verticalCollection.reloadData()
+
            
         case verticalCollection:
                     let destination = ProductViewController()
                     destination.transitioningDelegate = transitioningDelegate
                     destination.modalPresentationStyle = .custom
                     present(destination, animated: true)
+            
+            guard let selectedTag = dishes[selectedKey] else { return }
+            destination.setup(model: selectedTag[indexPath.row])
 
         default:
             break
@@ -216,7 +212,6 @@ extension UIViewController {
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.backgroundColor = .white
 
-//        collection.register(HorizontalCollectionViewCell.self, forCellWithReuseIdentifier: HorizontalCollectionViewCell.identifier)
         return collection
     }
 }
