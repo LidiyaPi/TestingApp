@@ -1,8 +1,8 @@
 //
 //  PanelTransition.swift
-//  MyUfanet
+//  TestingApp
 //
-//  Created by Ruslan Safargalin on 09.09.2022.
+//  Created by Лидия Пятаева on 06.07.2023.
 //
 
 import Foundation

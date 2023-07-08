@@ -1,10 +1,9 @@
 //
 //  HorizontalCollectionViewCell.swift
-//  CollectionView20.04
+//  TestingApp
 //
-//  Created by Ivan on 20.04.2022.
+//  Created by Лидия Пятаева on 03.07.2023.
 //
-
 
 import SnapKit
 
