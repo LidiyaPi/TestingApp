@@ -11,7 +11,9 @@ import SnapKit
 class BasketViewController: UIViewController {
     
     var quantities: [Int] = [0, 0, 0, 0, 0]
-    var basketDishes = [BasketDishes]()
+    
+    var basket = [BasketDishes]()
+    var dishes = [Dishes]()
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -20,46 +22,35 @@ class BasketViewController: UIViewController {
         return tableView
     }()
     
-    private let couponName: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFont(name: "SF Pro Display", size: 25)
-        label.text = "title"
-        return label
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
         addDelegates()
         addConstraints()
-        
         view.backgroundColor = .white
+        navigationItem.title = "sda"
         setupNavigationController()
-    }
+     }
     
     private func addSubviews() {
-        view.addSubview(couponName)
         view.addSubview(tableView)
     }
     
     private func addDelegates() {
         tableView.delegate = self
         tableView.dataSource = self
-        
-        guard let tabBarController = tabBarController as? TabBarViewController else {
-            return
-        }
-        tabBarController.tabBarControllerDelegate = self
     }
     
     private func addConstraints() {
         
         tableView.snp.makeConstraints { make in
-            make.top.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
+            make.top.equalTo(view.safeAreaInsets)
+            make.bottom.equalToSuperview()
             make.horizontalEdges.equalToSuperview()
             }
         }
+    
+    
 }
 
 extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
@@ -69,14 +60,13 @@ extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        basket.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "BasketTableViewCell"
         var cell = tableView.dequeueReusableCell(withIdentifier: "BasketTableViewCell", for: indexPath) as! BasketTableViewCell
         if cell == nil {
-            cell = BasketTableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            cell = BasketTableViewCell(style: .default, reuseIdentifier: "BasketTableViewCell")
         }
         let quantity = quantities[indexPath.row]
         cell.quantity = quantity
@@ -86,12 +76,33 @@ extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
         cell.plusButtonAction = {
             cell.quantity += 1
             }
+        var basketGuarded = basket[indexPath.row]
+        cell.quantityLabel.text = String(basketGuarded.quantity)
+        cell.setup(model: basket[indexPath.row])
+        if quantity < 0 { tableView.reloadRows(at: [indexPath], with: .automatic)}
+        
         return cell
     }
 }
-    
-extension BasketViewController: TabBarControllerDelegate {
-    func addToCartButtonTapped(dish: Dishes) {
-        print("работаем с добавлением массива dish в словарь")
+
+ 
+    extension BasketViewController: ProductViewControllerDelegate {
+        func addToBasket(dish: Dishes) {
+            var existingDishIndex: Int?
+            
+            for (index, basketDish) in basket.enumerated() {
+                if basketDish.dish == dish {
+                    existingDishIndex = index
+                    break
+                }
+            }
+            if let index = existingDishIndex {
+                basket[index].quantity += 1
+            } else {
+                let newBasketDish = BasketDishes(quantity: 1, dish: dish)
+                basket.append(newBasketDish)
+            }
+            
+            tableView.reloadData()
+        }
     }
-}

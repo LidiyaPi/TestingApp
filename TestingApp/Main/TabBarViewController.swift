@@ -7,13 +7,11 @@
 
 import UIKit
 
-protocol TabBarControllerDelegate: AnyObject {
-    func addToCartButtonTapped(dish: Dishes)
-}
+//protocol TabBarControllerDelegate: AnyObject {
+//    func addToCartButtonTapped(dish: Dishes)
+//}
 
 class TabBarViewController: UITabBarController {
-    
-    weak var tabBarControllerDelegate: TabBarControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,22 +22,23 @@ class TabBarViewController: UITabBarController {
     
     private func setupControllers() {
         
-        let navigationControllerGen = UINavigationController(rootViewController: MainViewController())
-        let navigationControllerSea = UINavigationController(rootViewController: SearchViewController())
-        let navigationControllerBas = UINavigationController(rootViewController: BasketViewController())
-        let navigationControllerAcc = UINavigationController(rootViewController: AccountViewController())
+        let mainViewController = UINavigationController(rootViewController: MainViewController())
+        let searchViewController = UINavigationController(rootViewController: SearchViewController())
+        let basketViewController = BasketViewController()
+        let accountViewController = UINavigationController(rootViewController: AccountViewController())
+      
         
         viewControllers = [
-            generateVC(viewController: navigationControllerGen,
+            generateVC(viewController: mainViewController,
                        title: "Главная",
                        image: UIImage(named: "главная")),
-            generateVC(viewController: navigationControllerSea,
+            generateVC(viewController: searchViewController,
                        title: "Поиск",
                        image: UIImage(named: "поиск")),
-            generateVC(viewController: navigationControllerBas,
+            generateVC(viewController: basketViewController,
                        title: "Корзина",
                        image: UIImage(named: "корзина")),
-            generateVC(viewController: navigationControllerAcc,
+            generateVC(viewController: accountViewController,
                        title: "Аккаунт",
                        image: UIImage(named: "аккаунт"))
         ]
@@ -54,5 +53,12 @@ class TabBarViewController: UITabBarController {
     private func setTabBarAppearance() {
         self.tabBar.itemPositioning = .fill
     }
-}
+    
+
+    }
+    
+    
+    
+
+
 

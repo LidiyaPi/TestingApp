@@ -29,7 +29,7 @@ struct MenuModel: Decodable {
     let dishes: [Dishes]
 }
 
-struct Dishes: Decodable {
+struct Dishes: Decodable, Equatable {
     var id: Int
     var name: String
     var price: Int
@@ -60,5 +60,5 @@ struct SortedDishes {
 
 struct BasketDishes {
     var quantity: Int = 1
-    var dish: [Dishes]
+    var dish: Dishes
 }

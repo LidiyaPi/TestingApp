@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class MenuViewController: UIViewController {
-    
+
     private var dishes = [String: [Dishes]]()
     private let horizontalCV = HorizontalCollectionViewCell()
     private let verticalCV = VerticalCollectionViewCell()
@@ -106,6 +106,8 @@ class MenuViewController: UIViewController {
 }
 
 
+
+
 // MARK: - UICollectionViewDataSource
 
 extension MenuViewController: UICollectionViewDataSource {
@@ -189,6 +191,21 @@ extension MenuViewController: UICollectionViewDelegateFlowLayout {
             
         case verticalCollection:
             let destination = ProductViewController()
+            
+//            guard let basketVC = tabBarController?.viewControllers?.first(where: { viewController in viewControllers.isKind(of: BasketViewController.self)}) else {
+//                return
+//            }
+            
+            if let basket = tabBarController?.viewControllers?.first (where: { $0 is BasketViewController }) as? BasketViewController {
+                                destination.delegate = basket
+            }
+            
+//            if let tabBar = tabBarController?.viewControllers?.first(where: { $0 is UITabBarController} ){
+//                let basketVC = tabBar.navigationController?.viewControllers.first(where: { $0 is BasketViewController})
+//                destination.delegate = basketVC as? any ProductViewControllerDelegate
+//            }
+            
+          
             destination.transitioningDelegate = transitioningDelegate
             destination.modalPresentationStyle = .custom
             present(destination, animated: true)

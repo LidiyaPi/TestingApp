@@ -13,9 +13,13 @@ struct PopUpWarningPINViewModel {
     let description: String?
 }
 
+protocol ProductViewControllerDelegate: AnyObject {
+    func addToBasket(dish: Dishes)
+}
 
 final class ProductViewController: UIViewController {
     
+    weak var delegate: ProductViewControllerDelegate?
     private var dish: Dishes?
     
     // MARK: Views
@@ -24,7 +28,6 @@ final class ProductViewController: UIViewController {
         let view: UIView = .init()
         view.backgroundColor = .gray
         view.alpha = 0.4
-        
         return view
     }()
     
@@ -54,7 +57,7 @@ final class ProductViewController: UIViewController {
     }()
     
     private var closeButton: UIButton = {
-        let button = UIButton(type: .custom)
+        let button = UIButton(type: .system)
         button.backgroundColor = .white
         button.layer.cornerRadius = 8
         button.tintColor = .black
@@ -94,7 +97,7 @@ final class ProductViewController: UIViewController {
     }()
     
     private var addToBasketButton: UIButton = {
-        let button = UIButton(type: .custom)
+        let button = UIButton(type: .system)
         button.backgroundColor = UIColor(red: 51/255, green: 100/255, blue: 224/255, alpha: 1)
         button.layer.cornerRadius = 10
         button.setTitle("Добавить в корзину", for: .normal)
@@ -203,16 +206,23 @@ final class ProductViewController: UIViewController {
     }
     
     private func addAction() {
-        let goBackX = UITapGestureRecognizer(target: self, action: #selector(closeVC))
-        addToBasketButton.addGestureRecognizer(goBackX)
+//        let goBackX = UITapGestureRecognizer(target: self, action: #selector(closeVC))
+        addToBasketButton.addTarget(self, action: #selector(closeVC), for: .touchDown)
     }
+    
+    func addToBasketButtonTapped(dish: Dishes) {
+            delegate?.addToBasket(dish: dish)
+        dismiss(animated: true)
+        }
     
     @objc private func closeVC() {
         dismiss(animated: true)
-        guard let tabBarController = tabBarController as? TabBarViewController,
-              let dishGuarded = dish
-        else { return }
-        tabBarController.tabBarControllerDelegate?.addToCartButtonTapped(dish: dishGuarded)
+        guard let dishGuarded = dish else { return }
+        delegate?.addToBasket(dish: dishGuarded)
+//        present(BasketViewController(), animated: true)
+     
+
         }
     }
+
 

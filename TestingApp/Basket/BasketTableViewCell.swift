@@ -10,14 +10,16 @@ import SnapKit
 
 class BasketTableViewCell: UITableViewCell {
     
+    private var dish: Dishes?
+    
     var minusButtonAction: (() -> Void)?
     var plusButtonAction: (() -> Void)?
     
     var quantity: Int = 0 {
         didSet {
-            if quantity < 0 {
-                quantity = 0
-            }
+                   if quantity < 0 {
+                       quantity = 0
+                   }
             quantityLabel.text = "\(quantity)"
         }
     }
@@ -158,6 +160,18 @@ class BasketTableViewCell: UITableViewCell {
         }
     }
     
+    func setup(model: BasketDishes) {
+        dish = model.dish
+        quantity = model.quantity
+        dishName.text = model.dish.name
+        priceLabel.text = String(model.dish.price)
+        quantityLabel.text = String(model.quantity)
+        
+        guard let url = URL(string: model.dish.imageUrl ) else { return }
+        dishImage.sd_setImage(with: url)
+        
+    }
+    
     @objc private func minusButtonTapped() {
         minusButtonAction?()
     }
@@ -167,3 +181,4 @@ class BasketTableViewCell: UITableViewCell {
     }
     
 }
+
