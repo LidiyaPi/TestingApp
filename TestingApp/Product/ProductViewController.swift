@@ -44,6 +44,7 @@ final class ProductViewController: UIViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 6
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -61,7 +62,6 @@ final class ProductViewController: UIViewController {
         button.backgroundColor = .white
         button.layer.cornerRadius = 8
         button.tintColor = .black
-        button.addTarget(self, action: #selector(closePVC), for: .touchDown)
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         return button
     }()
@@ -75,12 +75,22 @@ final class ProductViewController: UIViewController {
         return label
     }()
     
-    private let priceWeightLabel: UILabel = {
+    private let priceLabel: UILabel = {
         let label: UILabel = .init()
         label.font = UIFont(name: "SF Pro Display", size: 16)
         label.numberOfLines = 0
         label.textAlignment = .left
-        label.text = "Product name"
+        label.text = "Product price"
+        return label
+    }()
+    
+    private let weightLabel: UILabel = {
+        let label: UILabel = .init()
+        label.font = UIFont(name: "SF Pro Display", size: 16)
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.alpha = 0.4
+        label.text = "Product weight"
         return label
     }()
     
@@ -135,7 +145,8 @@ final class ProductViewController: UIViewController {
         productImage.addSubview(addLikeButton)
         productImage.addSubview(closeButton)
         wrapper.addSubview(titleLabel)
-        wrapper.addSubview(priceWeightLabel)
+        wrapper.addSubview(priceLabel)
+        wrapper.addSubview(weightLabel)
         wrapper.addSubview(descriptionLabel)
         wrapper.addSubview(addToBasketButton)
     }
@@ -176,14 +187,20 @@ final class ProductViewController: UIViewController {
             make.height.equalTo(26)
         }
         
-        priceWeightLabel.snp.makeConstraints { make in
+        priceLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.left.equalToSuperview().inset(24)
             make.height.equalTo(26)
         }
         
+        weightLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.left.equalTo(priceLabel.snp.right).inset(-8)
+            make.height.equalTo(26)
+        }
+        
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalTo(priceWeightLabel.snp.bottom).offset(24)
+            make.top.equalTo(priceLabel.snp.bottom).offset(24)
             make.left.right.equalToSuperview().inset(24)
         }
         
@@ -199,7 +216,8 @@ final class ProductViewController: UIViewController {
         
         titleLabel.text = model.name
         descriptionLabel.text = model.description
-        priceWeightLabel.text = String(model.price)
+        priceLabel.text = String("\(model.price) ₽")
+        weightLabel.text = String("• \(model.weight)г")
         
         guard let url = URL(string: model.imageUrl ) else { return }
         productImage.sd_setImage(with: url)
@@ -209,6 +227,7 @@ final class ProductViewController: UIViewController {
     private func addAction() {
 //        let goBackX = UITapGestureRecognizer(target: self, action: #selector(closeVC))
         addToBasketButton.addTarget(self, action: #selector(closeVC), for: .touchDown)
+        closeButton.addTarget(self, action: #selector(closeVC), for: .touchDown)
     }
     
     func addToBasketButtonTapped(dish: Dishes) {

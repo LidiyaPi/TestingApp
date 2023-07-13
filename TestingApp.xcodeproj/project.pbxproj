@@ -24,6 +24,7 @@
 		508660002A518C9A0050D613 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50865FFF2A518C9A0050D613 /* AccountViewController.swift */; };
 		508660022A51BD520050D613 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508660012A51BD520050D613 /* CategoryCell.swift */; };
 		508660042A51E3FD0050D613 /* CategoriesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508660032A51E3FD0050D613 /* CategoriesModel.swift */; };
+		50B55AA92A600CD400FABBC3 /* BasketNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B55AA82A600CD400FABBC3 /* BasketNavigationViewController.swift */; };
 		50C41AF02A55C3AD000A3C5C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C41AEF2A55C3AD000A3C5C /* SceneDelegate.swift */; };
 		50C9F1082A51FD00007F66FF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C9F1072A51FD00007F66FF /* NetworkService.swift */; };
 /* End PBXBuildFile section */
@@ -48,6 +49,7 @@
 		50865FFF2A518C9A0050D613 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		508660012A51BD520050D613 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		508660032A51E3FD0050D613 /* CategoriesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesModel.swift; sourceTree = "<group>"; };
+		50B55AA82A600CD400FABBC3 /* BasketNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketNavigationViewController.swift; sourceTree = "<group>"; };
 		50C41AEF2A55C3AD000A3C5C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		50C9F1072A51FD00007F66FF /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		C7DA611C550C9AD7AF7A50A5 /* Pods-TestingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestingApp.release.xcconfig"; path = "Target Support Files/Pods-TestingApp/Pods-TestingApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				50690B912A557119001C8932 /* BasketTableViewCell.swift */,
+				50B55AA82A600CD400FABBC3 /* BasketNavigationViewController.swift */,
 				50865FFD2A518C7C0050D613 /* BasketViewController.swift */,
 			);
 			path = Basket;
@@ -314,6 +317,7 @@
 			files = (
 				50865FFE2A518C7C0050D613 /* BasketViewController.swift in Sources */,
 				50C41AF02A55C3AD000A3C5C /* SceneDelegate.swift in Sources */,
+				50B55AA92A600CD400FABBC3 /* BasketNavigationViewController.swift in Sources */,
 				5055ED0F2A595CB6008D1E04 /* ViewController+Extention.swift in Sources */,
 				50690B902A542B5E001C8932 /* VerticalCollectionViewCell.swift in Sources */,
 				504E1D0A2A56D12C000ED1AA /* ProductViewController.swift in Sources */,

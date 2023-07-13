@@ -59,15 +59,6 @@ class MainViewController: UIViewController {
                 self.category = response
                 self.tableView.reloadData()
             }
-            
-            NetworkService.shared.requestMenu { (response, error) in
-                if error != nil {
-                    print("Не удалось получить массив меню")
-                }
-                guard let response = response else { return }
-                self.menuArray = response
-                self.fabricArrayTegs()
-            }
         }
     }
     
@@ -116,8 +107,22 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let menuViewController = MenuViewController()
-        navigationController?.pushViewController(menuViewController, animated: true)
-        menuViewController.setup(model: sortedArray)
+        
+        DispatchQueue.main.async {
+            SVProgressHUD.show()
+            NetworkService.shared.requestMenu { (response, error) in
+                if error != nil {
+                    print("Не удалось получить массив меню")
+                }
+                guard let response = response else { return }
+                self.menuArray = response
+                self.fabricArrayTegs()
+                menuViewController.setup(model: self.sortedArray)
+                SVProgressHUD.dismiss()
+                self.navigationController?.pushViewController(menuViewController, animated: true)
+                
+            }
+        }
     }
 }
 

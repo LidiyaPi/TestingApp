@@ -10,9 +10,9 @@ import UIKit
 
 extension UIViewController {
     func setupNavigationController() {
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
         
-        containerView.layer.cornerRadius = 25
+        containerView.layer.cornerRadius = 22
         containerView.clipsToBounds = true
         
         let button = UIBarButtonItem(customView: containerView)
@@ -22,10 +22,10 @@ extension UIViewController {
         
         let imageView = UIImageView(frame: containerView.bounds)
         imageView.image = UIImage(named: "Profile")
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
         containerView.addSubview(imageView)
         
-        let containerLeftView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 44))
+        let containerLeftView = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
         
         let titleLabel = UILabel(frame: CGRect(x: 50, y: 0, width: containerView.frame.width, height: 22))
         titleLabel.text = "Уфа"

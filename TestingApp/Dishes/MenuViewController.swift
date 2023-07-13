@@ -24,7 +24,6 @@ class MenuViewController: UIViewController {
     
     private var tegs = [Tegs]()
     
-    
     private var horizontalArray: [Int] {
         var array = [Int]()
         for element in 0...6 {
@@ -48,8 +47,8 @@ class MenuViewController: UIViewController {
     
     private func setupMenuNavigationController() {
         
-        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        containerView.layer.cornerRadius = 25
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+        containerView.layer.cornerRadius = 22
         containerView.clipsToBounds = true
         
         let button = UIBarButtonItem(customView: containerView)
@@ -99,14 +98,11 @@ class MenuViewController: UIViewController {
     
     func setup(model: [String: [Dishes]]) {
         dishes = model
-        keys = Array(dishes.keys)
+        keys = Array(dishes.keys).sorted()
         selectedKey = keys[0]
         horizontalCollection.reloadData()
     }
 }
-
-
-
 
 // MARK: - UICollectionViewDataSource
 
@@ -156,7 +152,7 @@ extension MenuViewController: UICollectionViewDelegateFlowLayout {
         case horizontalCollection:
             return CGSize(width: 86, height: 35)
         case verticalCollection:
-            let height = (collectionView.bounds.height - sideInset * 3) / 2
+//            let height = (collectionView.bounds.height - sideInset * 3) / 2
             return CGSize(width: 109, height: 145)
         default:
             return .zero
@@ -191,20 +187,10 @@ extension MenuViewController: UICollectionViewDelegateFlowLayout {
             
         case verticalCollection:
             let destination = ProductViewController()
-            
-//            guard let basketVC = tabBarController?.viewControllers?.first(where: { viewController in viewControllers.isKind(of: BasketViewController.self)}) else {
-//                return
-//            }
-            
+       
             if let basket = tabBarController?.viewControllers?.first (where: { $0 is BasketViewController }) as? BasketViewController {
                                 destination.delegate = basket
             }
-            
-//            if let tabBar = tabBarController?.viewControllers?.first(where: { $0 is BasketViewController} ){
-//                let basketVC = tabBarController?.navigationController?.viewControllers.first(where: { $0 is BasketViewController})
-                
-            
-            
           
             destination.transitioningDelegate = transitioningDelegate
             destination.modalPresentationStyle = .custom

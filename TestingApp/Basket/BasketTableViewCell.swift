@@ -50,6 +50,16 @@ class BasketTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let weightLabel: UILabel = {
+        let label: UILabel = .init()
+        label.font = UIFont(name: "SF Pro Display", size: 16)
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.alpha = 0.4
+        label.text = "Product weight"
+        return label
+    }()
+    
     private let quantityControl: UIControl = {
         let control = UIControl()
         control.backgroundColor = UIColor(red: 239/255, green: 238/255, blue: 236/255, alpha: 1)
@@ -113,6 +123,7 @@ class BasketTableViewCell: UITableViewCell {
         contentView.addSubview(dishImage)
         contentView.addSubview(dishName)
         contentView.addSubview(priceLabel)
+        contentView.addSubview(weightLabel)
         contentView.addSubview(quantityControl)
         quantityControl.addSubview(minusButton)
         quantityControl.addSubview(quantityLabel)
@@ -130,13 +141,17 @@ class BasketTableViewCell: UITableViewCell {
         dishName.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(10)
             make.left.equalTo(dishImage.snp.right).offset(16)
-//            make.right.equalTo(minusButton.snp.left)
+            make.right.equalTo(quantityControl.snp.left).offset(8)
         }
         
         priceLabel.snp.makeConstraints { make in
             make.top.equalTo(dishName.snp.bottom)
             make.left.equalTo(dishImage.snp.right).offset(16)
-         
+        }
+        
+        weightLabel.snp.makeConstraints { make in
+            make.top.equalTo(dishName.snp.bottom)
+            make.left.equalTo(priceLabel.snp.right).offset(8)
         }
         
         quantityControl.snp.makeConstraints { make in
@@ -166,7 +181,8 @@ class BasketTableViewCell: UITableViewCell {
         dish = model.dish
         quantity = model.quantity
         dishName.text = model.dish.name
-        priceLabel.text = String(model.dish.price)
+        priceLabel.text = String("\(model.dish.price) ₽")
+        weightLabel.text = String("• \(model.dish.weight)г")
         quantityLabel.text = String(model.quantity)
 
         guard let url = URL(string: model.dish.imageUrl ) else { return }
