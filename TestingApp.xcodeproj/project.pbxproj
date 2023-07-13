@@ -20,6 +20,7 @@
 		50690B922A557119001C8932 /* BasketTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50690B912A557119001C8932 /* BasketTableViewCell.swift */; };
 		50865FFA2A5179610050D613 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50865FF92A5179610050D613 /* TabBarViewController.swift */; };
 		50865FFC2A518C300050D613 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50865FFB2A518C300050D613 /* SearchViewController.swift */; };
+		50865FFE2A518C7C0050D613 /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50865FFD2A518C7C0050D613 /* BasketViewController.swift */; };
 		508660002A518C9A0050D613 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50865FFF2A518C9A0050D613 /* AccountViewController.swift */; };
 		508660022A51BD520050D613 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508660012A51BD520050D613 /* CategoryCell.swift */; };
 		508660042A51E3FD0050D613 /* CategoriesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508660032A51E3FD0050D613 /* CategoriesModel.swift */; };
@@ -43,6 +44,7 @@
 		50690B912A557119001C8932 /* BasketTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketTableViewCell.swift; sourceTree = "<group>"; };
 		50865FF92A5179610050D613 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		50865FFB2A518C300050D613 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		50865FFD2A518C7C0050D613 /* BasketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
 		50865FFF2A518C9A0050D613 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		508660012A51BD520050D613 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		508660032A51E3FD0050D613 /* CategoriesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesModel.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				50690B912A557119001C8932 /* BasketTableViewCell.swift */,
+				50865FFD2A518C7C0050D613 /* BasketViewController.swift */,
 			);
 			path = Basket;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50865FFE2A518C7C0050D613 /* BasketViewController.swift in Sources */,
 				50C41AF02A55C3AD000A3C5C /* SceneDelegate.swift in Sources */,
 				5055ED0F2A595CB6008D1E04 /* ViewController+Extention.swift in Sources */,
 				50690B902A542B5E001C8932 /* VerticalCollectionViewCell.swift in Sources */,

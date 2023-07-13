@@ -15,11 +15,36 @@ class BasketViewController: UIViewController {
     var basket = [BasketDishes]()
     var dishes = [Dishes]()
     
+    var summ = 0
+    
+    var payment: Int = 0 {
+        didSet {
+//                   if quantity < 0 {
+//                       quantity = 0
+//                   }
+//            payment =
+//            paymentButton.text = "\(payment)"
+        }
+    }
+    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.register(BasketTableViewCell.self, forCellReuseIdentifier: "BasketTableViewCell")
         return tableView
+    }()
+    
+    private let paymentButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.layer.cornerRadius = 10
+        button.setTitle("Оплатить", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        button.setTitleColor(.white, for: .normal)
+//        button.addTarget(self, action: #selector(plusButtonTapped), for: .touchDown)
+        button.layer.borderWidth = 0.0
+        button.backgroundColor = UIColor(red: 51/255, green: 100/255, blue: 224/255, alpha: 1)
+        button.alpha = 1
+        return button
     }()
     
     override func viewDidLoad() {
@@ -30,10 +55,11 @@ class BasketViewController: UIViewController {
         view.backgroundColor = .white
         navigationItem.title = "sda"
         setupNavigationController()
-     }
+    }
     
     private func addSubviews() {
         view.addSubview(tableView)
+        view.addSubview(paymentButton)
     }
     
     private func addDelegates() {
@@ -45,11 +71,18 @@ class BasketViewController: UIViewController {
         
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaInsets)
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(paymentButton.snp.top).inset(-16)
             make.horizontalEdges.equalToSuperview()
-            }
         }
-    
+        
+        paymentButton.snp.makeConstraints { make in
+            make.top.equalTo(tableView.snp.bottom)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-16)
+            make.left.equalToSuperview().inset(16)
+            make.width.equalTo(343)
+            make.height.equalTo(48)
+        }
+    }
     
 }
 
@@ -68,14 +101,25 @@ extension BasketViewController: UITableViewDelegate, UITableViewDataSource {
         if cell == nil {
             cell = BasketTableViewCell(style: .default, reuseIdentifier: "BasketTableViewCell")
         }
-        let quantity = quantities[indexPath.row]
+        let quantity = basket[indexPath.row].quantity
         cell.quantity = quantity
         cell.minusButtonAction = {
-                cell.quantity -= 1
+            cell.quantity -= 1
+            self.basket[indexPath.row].quantity -= 1
+                self.summ -= self.basket[indexPath.row].dish.price * self.basket[indexPath.row].quantity
+            
+            if cell.quantity == 0 {
+                print("sd")
+                self.basket.remove(at: self.basket[indexPath.row].quantity)
+                tableView.reloadData()
+            }
         }
         cell.plusButtonAction = {
             cell.quantity += 1
+            self.basket[indexPath.row].quantity += 1
+            self.summ += self.basket[indexPath.row].dish.price * self.basket[indexPath.row].quantity
             }
+        self.paymentButton.setTitle("Оплатить \(summ) Р", for: .normal)
         var basketGuarded = basket[indexPath.row]
         cell.quantityLabel.text = String(basketGuarded.quantity)
         cell.setup(model: basket[indexPath.row])

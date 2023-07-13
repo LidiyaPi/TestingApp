@@ -200,10 +200,10 @@ extension MenuViewController: UICollectionViewDelegateFlowLayout {
                                 destination.delegate = basket
             }
             
-//            if let tabBar = tabBarController?.viewControllers?.first(where: { $0 is UITabBarController} ){
-//                let basketVC = tabBar.navigationController?.viewControllers.first(where: { $0 is BasketViewController})
-//                destination.delegate = basketVC as? any ProductViewControllerDelegate
-//            }
+//            if let tabBar = tabBarController?.viewControllers?.first(where: { $0 is BasketViewController} ){
+//                let basketVC = tabBarController?.navigationController?.viewControllers.first(where: { $0 is BasketViewController})
+                
+            
             
           
             destination.transitioningDelegate = transitioningDelegate

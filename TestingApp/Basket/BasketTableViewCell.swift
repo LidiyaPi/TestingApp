@@ -130,11 +130,13 @@ class BasketTableViewCell: UITableViewCell {
         dishName.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(10)
             make.left.equalTo(dishImage.snp.right).offset(16)
+//            make.right.equalTo(minusButton.snp.left)
         }
         
         priceLabel.snp.makeConstraints { make in
             make.top.equalTo(dishName.snp.bottom)
             make.left.equalTo(dishImage.snp.right).offset(16)
+         
         }
         
         quantityControl.snp.makeConstraints { make in
@@ -166,10 +168,10 @@ class BasketTableViewCell: UITableViewCell {
         dishName.text = model.dish.name
         priceLabel.text = String(model.dish.price)
         quantityLabel.text = String(model.quantity)
-        
+
         guard let url = URL(string: model.dish.imageUrl ) else { return }
         dishImage.sd_setImage(with: url)
-        
+
     }
     
     @objc private func minusButtonTapped() {
@@ -181,4 +183,3 @@ class BasketTableViewCell: UITableViewCell {
     }
     
 }
-

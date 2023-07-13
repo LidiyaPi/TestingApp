@@ -61,6 +61,7 @@ final class ProductViewController: UIViewController {
         button.backgroundColor = .white
         button.layer.cornerRadius = 8
         button.tintColor = .black
+        button.addTarget(self, action: #selector(closePVC), for: .touchDown)
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         return button
     }()
@@ -214,6 +215,10 @@ final class ProductViewController: UIViewController {
             delegate?.addToBasket(dish: dish)
         dismiss(animated: true)
         }
+    
+    @objc private func closePVC() {
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
+    }
     
     @objc private func closeVC() {
         dismiss(animated: true)
